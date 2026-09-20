@@ -34,6 +34,8 @@
 | 32 | [`32_Coding_Interview_Workbook.md`](32_Coding_Interview_Workbook.md) | Timed coding patterns, Java templates, 60-problem progression |
 | 33 | [`33_LLD_and_Machine_Coding_Workbook.md`](33_LLD_and_Machine_Coding_Workbook.md) | LLD drills, machine coding, design rubrics |
 | 34 | [`34_System_Design_Interview_Workbook.md`](34_System_Design_Interview_Workbook.md) | Timed system-design drills, estimation, SaaS and RAG designs |
+| 39 | [`39_Java_Collections_and_Data_Structures_Deep_Dive.md`](39_Java_Collections_and_Data_Structures_Deep_Dive.md) | In-depth internals of List, Set, Map, Concurrent Collections & Distributed Scaling |
+
 
 ## Applied AI notes
 

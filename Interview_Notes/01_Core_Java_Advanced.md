@@ -36,25 +36,76 @@ The JMM defines how the Java runtime interacts with CPU hardware caches (L1, L2,
 * **`synchronized` / Locks:** Acquiring a monitor invalidates the local thread cache; releasing the monitor forces all modifications to be flushed to main memory.
 * **`final` Field Semantics:** Guarantees that once an object constructor finishes, all initialized `final` fields are fully visible to all threads without race conditions (freeze action).
 
-### 4.2 HashMap vs. ConcurrentHashMap Internals
+### 4.2 Java Collections Framework & Concurrency Internals (Deep Dive)
+
+#### 4.2.1 Architectural Hierarchy & Core Contracts
+The Java Collections Framework is organized into two distinct hierarchies: `Iterable -> Collection -> (List, Set, Queue, Deque)` and the standalone `Map -> (SortedMap, NavigableMap, ConcurrentMap)`.
+* **The `equals()` and `hashCode()` Contract:** If `a.equals(b)` is true, `a.hashCode() == b.hashCode()` MUST be true. If mutated fields change an object's `hashCode()` while stored in a hash-based collection, the entry becomes unreachable, creating a silent memory leak.
+* **Fail-Fast vs. Fail-Safe / Weakly Consistent:**
+  - `ArrayList`, `HashMap`, `HashSet` use a mutable `modCount`. Any structural modification during iteration outside `iterator.remove()` triggers `ConcurrentModificationException`.
+  - `ConcurrentHashMap` and `CopyOnWriteArrayList` provide weakly consistent iterators that iterate over snapshots or live volatile state without ever throwing `ConcurrentModificationException`.
+
+#### 4.2.2 `List` Implementations & Thread Handling
+* **`ArrayList`:**
+  - Backed by `Object[] elementData`. Initial default capacity is 10.
+  - **Growth Formula:** `newCapacity = oldCapacity + (oldCapacity >> 1)` (1.5x expansion). Allocates a new array and invokes hardware-accelerated `System.arraycopy()`.
+  - **CPU Cache Locality:** Elements reside in contiguous memory; L1/L2 hardware prefetchers load full 64-byte cache lines, providing blistering sequential read speeds.
+* **`LinkedList` (Why Avoided in High-Throughput Backends):**
+  - Doubly linked node (`Node<E> { E item; Node<E> next; Node<E> prev; }`).
+  - Imposes severe 24–32 byte overhead *per node* on 64-bit JVMs (8x memory overhead vs `ArrayList` of references).
+  - Causes CPU cache thrashing due to pointer chasing across random heap generations.
+* **Thread-Safety in Lists:**
+  - `Collections.synchronizedList(list)`: Imposes a coarse intrinsic lock on all methods. Iteration is NOT thread-safe without an explicit manual `synchronized(list) { ... }` block.
+  - `CopyOnWriteArrayList`: Backed by `volatile Object[] array`. Reads require zero locks. Every write clones the entire array via `Arrays.copyOf()`, modifies it, and updates the volatile pointer. Ideal for read-heavy observer/listener registries with near-zero writes.
+
+#### 4.2.3 `Set` Implementations & High-Performance Bit Vectors
+* **`HashSet`:** Internally backed by a `HashMap` where elements are keys and values point to a static dummy `PRESENT = new Object()`. Inherits all HashMap collision and sizing properties.
+* **`LinkedHashSet`:** Augments `HashSet` with a doubly linked list across entries, preserving insertion-order iteration.
+* **`TreeSet`:** Backed by `TreeMap` (Red-Black Tree), guaranteeing $O(\log n)$ for search, insertion, and deletion.
+* **`EnumSet`:** Ultra-optimized bit-vector set. Backed by a single 64-bit `long` (`RegularEnumSet`) or `long[]` (`JumboEnumSet`). Operations compile down to single-cycle bitwise CPU instructions (`|`, `&`, `~`) with zero node allocation.
+* **Concurrent Set:** Always prefer `ConcurrentHashMap.newKeySet()` over `Collections.synchronizedSet()`.
+
+#### 4.2.4 `Map` & `HashMap` Internals (The Standard Interview Core)
 ```
 HashMap (Java 8+):
 [Index 0] -> [Node] -> [Node] -> null
 [Index 1] -> [TreeNode (Red-Black Tree when bin count >= 8 and capacity >= 64)]
 [Index 2] -> null
-...
 ```
-* **HashMap:**
-  - Array of bins (`Node<K,V>[] table`). Hash code undergoes bit spread: `(h = key.hashCode()) ^ (h >>> 16)`.
-  - Target index is calculated using bitwise AND: `index = (n - 1) & hash`.
-  - Collision resolution: Linked list until collision count reaches `TREEIFY_THRESHOLD = 8` and table capacity $\ge 64$, at which point it converts to a **Red-Black Tree** ($O(\log n)$ lookup). If capacity $< 64$, it doubles the table capacity instead.
-  - Load Factor = 0.75. When `size > threshold (capacity * loadFactor)`, table doubles via power-of-two resizing.
-* **ConcurrentHashMap (Java 8+):**
-  - Completely removed the Java 7 Segment locks.
-  - Uses **Lock-Free CAS (`Compare-And-Swap`)** to insert the very first node into an empty bin (`Unsafe.compareAndSwapObject` / `VarHandle`).
-  - If a bin already contains nodes, it locks **only that specific bin's head node** using `synchronized(headNode)`. This achieves extremely fine-grained concurrency (only concurrent writes to the *exact same bin* block each other).
-  - Reads (`get()`) are completely lock-free; nodes use `volatile V val` and `volatile Node<K,V> next`.
-  - Resizing is collaborative: multiple threads assist in transferring buckets using forwarding nodes (`ForwardingNode`).
+* **Bitwise Hash Spreading:** `(h = key.hashCode()) ^ (h >>> 16)` folds high-order bits into low-order bits, mitigating hash collisions in small tables.
+* **Power-of-Two Indexing:** `index = (capacity - 1) & hash`. Avoids expensive CPU division modulo operations.
+* **Treeification Mechanics:**
+  - When collisions in a single bucket reach `TREEIFY_THRESHOLD = 8` and table capacity is $\ge 64$, the bin transforms into a balanced Red-Black Tree ($O(\log n)$ worst-case search).
+  - If capacity $< 64$, the map doubles capacity instead of treeifying.
+  - If deletions reduce nodes to `UNTREEIFY_THRESHOLD = 6`, it converts back to a linked list.
+  - **Poisson Distribution Rationale:** Under uniform hashing with $\lambda = 0.5$, the probability of 8 collisions in a single bucket is less than $10^{-7}$. Treeification protects against malicious Hash-DoS attacks or degenerate hash functions.
+* **Resize Without Full Rehashing:** When doubling capacity, a node either remains at `index` or moves to `index + oldCap`, determined by `(e.hash & oldCap) == 0`.
+* **`LinkedHashMap` & LRU Cache:** Maintains a doubly linked list across entries. With `accessOrder = true` and overriding `removeEldestEntry(entry)`, it forms an in-memory LRU cache.
+
+#### 4.2.5 Concurrent Collections & High-Throughput Thread Mechanics
+* **`ConcurrentHashMap` (Java 8+ Architecture):**
+  - **Lock-Free Reads:** `get()` requires zero locks; `Node.val` and `Node.next` are `volatile`.
+  - **CAS Insertion:** Empty bins are initialized using lock-free Compare-And-Swap (`Unsafe.compareAndSwapObject` / `VarHandle`).
+  - **Bin-Level Locking:** Non-empty bins synchronize only on the head node of that specific bin (`synchronized (head)`). Writes to different bins proceed in parallel with zero contention.
+  - **Collaborative Resizing:** Threads encountering `ForwardingNode` (`hash = -1`) assist in copying buckets (`helpTransfer()`).
+  - **Striped Counters:** `size()` uses an array of `CounterCell` (same as `LongAdder`) to avoid thread contention on a single shared counter.
+  - **Atomic Mutations:** Always use `computeIfAbsent()`, `computeIfPresent()`, or `merge()` to prevent check-then-act race conditions.
+* **`ConcurrentSkipListMap` / `Set`:** Lock-free Skip List providing $O(\log n)$ concurrent sorted key navigation.
+* **Queues & Deques:**
+  - `ArrayBlockingQueue`: Bounded, single `ReentrantLock` with `notEmpty`/`notFull` conditions.
+  - `LinkedBlockingQueue`: Dual-lock queue (`takeLock` and `putLock`) allowing concurrent producers and consumers.
+  - `ConcurrentLinkedQueue`: Unbounded, lock-free queue using the Michael-Scott CAS algorithm.
+  - `SynchronousQueue`: Zero-capacity direct thread handoff, backing cached thread pools.
+
+#### 4.2.6 Multi-Instance Scaling & Distributed Realities
+Local in-memory collections (`ConcurrentHashMap`, `BlockingQueue`) are strictly confined to a single JVM process.
+* In a Kubernetes cluster with multiple pods:
+  - Local collections cause state divergence, split-brain, and data loss upon pod restart.
+  - **Local Map $\rightarrow$ Redis Hash (`HSET`/`HGET`) / Hazelcast `IMap`**.
+  - **Local Queue $\rightarrow$ Kafka / RabbitMQ / Redis Streams**.
+  - **Local Set $\rightarrow$ Redis Set (`SADD`)**.
+* Use local collections for request-scoped processing and static read-heavy configuration caching. Offload shared transactional state to distributed stores.
+
 
 ### 4.3 Garbage Collection Internals (G1 GC & ZGC)
 * **Generational Hypothesis:** Most objects die young ($< 1$ms).
