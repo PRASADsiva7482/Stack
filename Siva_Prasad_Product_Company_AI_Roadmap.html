@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siva Prasad Vajja — Career Transition & AI Engineering Roadmap</title>
+<style>
+  :root {
+    --primary: #1e3a8a;
+    --primary-light: #eff6ff;
+    --text: #1f2937;
+    --text-muted: #4b5563;
+    --border: #e5e7eb;
+    --bg-code: #f3f4f6;
+    --accent: #2563eb;
+    --callout-bg: #f8fafc;
+    --callout-border: #3b82f6;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    background-color: #f1f5f9;
+    line-height: 1.65;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+  }
+
+  /* Top Bar Actions */
+  .top-action-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .brand {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.05rem;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 12px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .btn-print {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-print:hover {
+    background: #1d4ed8;
+  }
+
+  .btn-toggle-toc {
+    background: #f1f5f9;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-toggle-toc:hover {
+    background: #e2e8f0;
+  }
+
+  /* Main Layout */
+  .layout-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 24px auto;
+    padding: 0 20px;
+    gap: 32px;
+  }
+
+  /* Sidebar TOC */
+  .sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .sidebar h3 {
+    margin-top: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sidebar li {
+    margin: 6px 0;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .sidebar li.toc-h1 {
+    font-weight: 600;
+    margin-top: 10px;
+  }
+
+  .sidebar li.toc-h2 {
+    padding-left: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .sidebar a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .sidebar a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* Main Document Content */
+  .document-content {
+    flex: 1;
+    min-width: 0;
+    background: white;
+    padding: 48px 56px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  h1 {
+    color: var(--primary);
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+
+  h2 {
+    color: #1e293b;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 28px;
+    margin-bottom: 14px;
+    font-size: 1.35rem;
+  }
+
+  h3 {
+    color: #334155;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.15rem;
+  }
+
+  p, ul, ol {
+    margin-bottom: 14px;
+  }
+
+  ul, ol {
+    padding-left: 24px;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
+
+  /* Blockquotes / Callout boxes */
+  blockquote {
+    margin: 18px 0;
+    padding: 14px 18px;
+    background-color: var(--callout-bg);
+    border-left: 4px solid var(--callout-border);
+    border-radius: 0 6px 6px 0;
+    color: #334155;
+    font-size: 0.95rem;
+  }
+
+  blockquote > :first-child {
+    margin-top: 0;
+  }
+  blockquote > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* Code */
+  code {
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88em;
+    color: #b91c1c;
+  }
+
+  pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.88em;
+    line-height: 1.5;
+  }
+
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 32px 0;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* PRINT STYLING (For Save as PDF & Printing) */
+  @media print {
+    body {
+      background: white !important;
+      color: black !important;
+      font-size: 11pt !important;
+      line-height: 1.45 !important;
+    }
+
+    .top-action-bar, .sidebar {
+      display: none !important;
+    }
+
+    .layout-container {
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+
+    .document-content {
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    h1, h2, h3 {
+      page-break-after: avoid;
+      color: black !important;
+    }
+
+    h1 {
+      border-bottom: 2px solid #333 !important;
+      margin-top: 24pt !important;
+    }
+
+    blockquote, pre {
+      page-break-inside: avoid;
+      background: #f8f9fa !important;
+      border-left: 3px solid #666 !important;
+      color: black !important;
+    }
+
+    a {
+      color: black !important;
+      text-decoration: underline !important;
+    }
+
+    @page {
+      margin: 1.8cm 1.5cm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-action-bar">
+  <div class="brand">📄 Siva Prasad Vajja — Product Company & AI Roadmap</div>
+  <div class="btn-group">
+    <button class="btn btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+</div>
+
+<div class="layout-container">
+  <nav class="sidebar" id="tocSidebar">
+    <h3>Table of Contents</h3>
+    <ul>
+      <li class="toc-h1"><a href="#product-company-career-transition-ai-engineering-roadmap">Product-Company Career Transition & AI Engineering Roadmap</a></li>
+<li class="toc-h2"><a href="#siva-prasad-vajja-java-spring-boot-react-telecom-product-engineer">Siva Prasad Vajja — Java/Spring Boot/React/Telecom Product Engineer</a></li>
+<li class="toc-h1"><a href="#1-current-resume-profile">1. Current Resume Profile</a></li>
+<li class="toc-h2"><a href="#current-positioning">Current positioning</a></li>
+<li class="toc-h2"><a href="#how-to-position-this-profile">How to position this profile</a></li>
+<li class="toc-h1"><a href="#2-career-objective">2. Career Objective</a></li>
+<li class="toc-h2"><a href="#primary-goal">Primary goal</a></li>
+<li class="toc-h2"><a href="#avoid-as-primary-targets">Avoid as primary targets</a></li>
+<li class="toc-h1"><a href="#3-product-company-target-categories">3. Product-Company Target Categories</a></li>
+<li class="toc-h2"><a href="#tier-1-telecom-product-companies">Tier 1: Telecom Product Companies</a></li>
+<li class="toc-h1"><a href="#4-important-direct-competitors-domain-neighbours">4. Important Direct Competitors / Domain Neighbours</a></li>
+<li class="toc-h2"><a href="#bss-oss-telecom-software">BSS / OSS / Telecom Software</a></li>
+<li class="toc-h1"><a href="#5-b2b-saas-targets">5. B2B SaaS Targets</a></li>
+<li class="toc-h1"><a href="#6-fintech-product-targets">6. FinTech Product Targets</a></li>
+<li class="toc-h1"><a href="#7-ai-native-product-companies">7. AI-Native Product Companies</a></li>
+<li class="toc-h1"><a href="#8-recommended-career-positioning">8. Recommended Career Positioning</a></li>
+<li class="toc-h2"><a href="#short-term-job-titles">Short-term job titles</a></li>
+<li class="toc-h2"><a href="#ai-adjacent-roles">AI-adjacent roles</a></li>
+<li class="toc-h1"><a href="#9-target-technical-profile">9. Target Technical Profile</a></li>
+<li class="toc-h1"><a href="#10-core-java-zero-to-advanced-interview-level">10. Core Java — Zero to Advanced Interview Level</a></li>
+<li class="toc-h2"><a href="#language">Language</a></li>
+<li class="toc-h2"><a href="#oop">OOP</a></li>
+<li class="toc-h2"><a href="#collections">Collections</a></li>
+<li class="toc-h2"><a href="#streams">Streams</a></li>
+<li class="toc-h2"><a href="#exceptions">Exceptions</a></li>
+<li class="toc-h2"><a href="#multithreading">Multithreading</a></li>
+<li class="toc-h2"><a href="#jvm">JVM</a></li>
+<li class="toc-h1"><a href="#11-spring-framework">11. Spring Framework</a></li>
+<li class="toc-h2"><a href="#core">Core</a></li>
+<li class="toc-h2"><a href="#spring-boot">Spring Boot</a></li>
+<li class="toc-h2"><a href="#spring-mvc">Spring MVC</a></li>
+<li class="toc-h2"><a href="#spring-security">Spring Security</a></li>
+<li class="toc-h1"><a href="#12-jpa-hibernate">12. JPA / Hibernate</a></li>
+<li class="toc-h1"><a href="#13-microservices">13. Microservices</a></li>
+<li class="toc-h1"><a href="#14-kafka">14. Kafka</a></li>
+<li class="toc-h1"><a href="#15-redis">15. Redis</a></li>
+<li class="toc-h1"><a href="#16-sql-database">16. SQL / Database</a></li>
+<li class="toc-h1"><a href="#17-system-design">17. System Design</a></li>
+<li class="toc-h2"><a href="#fundamentals">Fundamentals</a></li>
+<li class="toc-h2"><a href="#design-problems">Design problems</a></li>
+<li class="toc-h1"><a href="#18-cloud-aws">18. Cloud — AWS</a></li>
+<li class="toc-h2"><a href="#aws-fundamentals">AWS fundamentals</a></li>
+<li class="toc-h1"><a href="#19-docker">19. Docker</a></li>
+<li class="toc-h1"><a href="#20-kubernetes">20. Kubernetes</a></li>
+<li class="toc-h1"><a href="#21-observability">21. Observability</a></li>
+<li class="toc-h1"><a href="#22-security">22. Security</a></li>
+<li class="toc-h1"><a href="#23-react">23. React</a></li>
+<li class="toc-h1"><a href="#24-ai-roadmap-applied-ai-for-a-java-engineer">24. AI Roadmap — Applied AI for a Java Engineer</a></li>
+<li class="toc-h2"><a href="#key-principle">Key principle</a></li>
+<li class="toc-h1"><a href="#25-llm-fundamentals">25. LLM Fundamentals</a></li>
+<li class="toc-h1"><a href="#26-transformer-fundamentals">26. Transformer Fundamentals</a></li>
+<li class="toc-h1"><a href="#27-prompt-engineering">27. Prompt Engineering</a></li>
+<li class="toc-h1"><a href="#28-embeddings">28. Embeddings</a></li>
+<li class="toc-h1"><a href="#29-vector-databases">29. Vector Databases</a></li>
+<li class="toc-h2"><a href="#postgresql-pgvector">PostgreSQL + pgvector</a></li>
+<li class="toc-h1"><a href="#30-rag">30. RAG</a></li>
+<li class="toc-h1"><a href="#31-spring-ai">31. Spring AI</a></li>
+<li class="toc-h1"><a href="#32-langchain4j">32. LangChain4j</a></li>
+<li class="toc-h1"><a href="#33-ai-tool-calling">33. AI Tool Calling</a></li>
+<li class="toc-h1"><a href="#34-ai-agents">34. AI Agents</a></li>
+<li class="toc-h1"><a href="#35-ai-workflow-automation">35. AI + Workflow Automation</a></li>
+<li class="toc-h1"><a href="#36-mcp-model-context-protocol">36. MCP — Model Context Protocol</a></li>
+<li class="toc-h1"><a href="#37-ai-evaluation">37. AI Evaluation</a></li>
+<li class="toc-h1"><a href="#38-ai-security">38. AI Security</a></li>
+<li class="toc-h1"><a href="#39-ai-guardrails">39. AI Guardrails</a></li>
+<li class="toc-h1"><a href="#40-ai-cost-performance">40. AI Cost & Performance</a></li>
+<li class="toc-h1"><a href="#41-python-only-the-amount-needed-initially">41. Python — Only the Amount Needed Initially</a></li>
+<li class="toc-h1"><a href="#42-ai-project-portfolio">42. AI Project Portfolio</a></li>
+<li class="toc-h2"><a href="#project-1-enterprise-rag-assistant">Project 1 — Enterprise RAG Assistant</a></li>
+<li class="toc-h2"><a href="#project-2-ai-telecom-support-assistant">Project 2 — AI Telecom Support Assistant</a></li>
+<li class="toc-h2"><a href="#project-3-ai-workflow-agent">Project 3 — AI Workflow Agent</a></li>
+<li class="toc-h2"><a href="#project-4-event-driven-ai-platform">Project 4 — Event-Driven AI Platform</a></li>
+<li class="toc-h2"><a href="#project-5-multi-tenant-ai-saas">Project 5 — Multi-Tenant AI SaaS</a></li>
+<li class="toc-h1"><a href="#43-resume-transformation">43. Resume Transformation</a></li>
+<li class="toc-h1"><a href="#44-interview-preparation">44. Interview Preparation</a></li>
+<li class="toc-h2"><a href="#java">Java</a></li>
+<li class="toc-h2"><a href="#spring">Spring</a></li>
+<li class="toc-h2"><a href="#microservices">Microservices</a></li>
+<li class="toc-h2"><a href="#system-design">System Design</a></li>
+<li class="toc-h2"><a href="#ai">AI</a></li>
+<li class="toc-h1"><a href="#45-product-engineering-concepts">45. Product Engineering Concepts</a></li>
+<li class="toc-h2"><a href="#product-thinking">Product thinking</a></li>
+<li class="toc-h2"><a href="#saas-architecture">SaaS architecture</a></li>
+<li class="toc-h2"><a href="#production-engineering">Production engineering</a></li>
+<li class="toc-h1"><a href="#46-6d-domain-knowledge-to-preserve">46. 6D Domain Knowledge to Preserve</a></li>
+<li class="toc-h1"><a href="#47-competitive-positioning">47. Competitive Positioning</a></li>
+<li class="toc-h1"><a href="#48-priority-matrix">48. Priority Matrix</a></li>
+<li class="toc-h2"><a href="#must-learn">Must learn</a></li>
+<li class="toc-h2"><a href="#learn-next">Learn next</a></li>
+<li class="toc-h2"><a href="#lower-priority-initially">Lower priority initially</a></li>
+<li class="toc-h1"><a href="#49-suggested-learning-order">49. Suggested Learning Order</a></li>
+<li class="toc-h2"><a href="#phase-1-backend-mastery">Phase 1 — Backend Mastery</a></li>
+<li class="toc-h2"><a href="#phase-2-distributed-systems">Phase 2 — Distributed Systems</a></li>
+<li class="toc-h2"><a href="#phase-3-production">Phase 3 — Production</a></li>
+<li class="toc-h2"><a href="#phase-4-system-design">Phase 4 — System Design</a></li>
+<li class="toc-h2"><a href="#phase-5-ai-fundamentals">Phase 5 — AI Fundamentals</a></li>
+<li class="toc-h2"><a href="#phase-6-java-ai">Phase 6 — Java AI</a></li>
+<li class="toc-h2"><a href="#phase-7-agents">Phase 7 — Agents</a></li>
+<li class="toc-h2"><a href="#phase-8-ai-production">Phase 8 — AI Production</a></li>
+<li class="toc-h2"><a href="#phase-9-product-portfolio">Phase 9 — Product Portfolio</a></li>
+<li class="toc-h2"><a href="#phase-10-job-search">Phase 10 — Job Search</a></li>
+<li class="toc-h1"><a href="#50-company-research-output-required-from-codex">50. Company Research Output Required from Codex</a></li>
+<li class="toc-h1"><a href="#51-skill-research-output-required-from-codex">51. Skill Research Output Required from Codex</a></li>
+<li class="toc-h1"><a href="#52-ai-notes-output-required-from-codex">52. AI Notes Output Required from Codex</a></li>
+<li class="toc-h1"><a href="#53-rules-for-the-codex-research">53. Rules for the Codex Research</a></li>
+<li class="toc-h1"><a href="#54-final-career-target">54. Final Career Target</a></li>
+    </ul>
+  </nav>
+
+  <main class="document-content">
+    <h1 id="product-company-career-transition-ai-engineering-roadmap">Product-Company Career Transition &amp; AI Engineering Roadmap</h1>
+<h2 id="siva-prasad-vajja-javaspring-bootreacttelecom-product-engineer">Siva Prasad Vajja — Java/Spring Boot/React/Telecom Product Engineer</h2>
+<blockquote>
+<p><strong>Purpose:</strong> This document is a complete study roadmap and research brief to give to Codex.<br />
+The goal is to prepare for a move from 6D Technologies into <strong>product companies only</strong> — especially telecom/BSS products, B2B SaaS, enterprise platforms, FinTech/product platforms, and AI-enabled SaaS.</p>
+<p><strong>Important constraint:</strong> Do NOT include service/consulting companies such as TCS, Infosys, Wipro, Cognizant, Accenture, Capgemini, HCLTech, Tech Mahindra, LTIMindtree, Persistent, Deloitte Consulting, EY, PwC, KPMG, etc. They are outside this target strategy.</p>
+<p><strong>Audit correction (2026-09-14):</strong> The original resume PDF is the source of truth. This roadmap is a learning plan, not proof of production ownership. The original resume verifies Java 17, Spring Boot/MVC, REST, microservices, JPA/Hibernate, SQL/MySQL, Camunda, Spring Batch, React integration, Git/GitLab, Maven, JUnit, CI/CD support, production support/RCA, and Agile collaboration. Kafka, Redis, AWS, Kubernetes, OpenTelemetry, Spring AI, RAG, agents, MCP, large scale numbers, and exact outcome percentages are learning targets or examples unless separately evidenced. See <a href="Interview_Notes/00_Audit_and_Study_Plan.md"><code>Interview_Notes/00_Audit_and_Study_Plan.md</code></a> for the canonical audit, tracker, coverage matrix, and corrected learning order.</p>
+</blockquote>
+<hr />
+<h1 id="1-current-resume-profile">1. Current Resume Profile</h1>
+<h2 id="current-positioning">Current positioning</h2>
+<ul>
+<li>Senior Software Engineer</li>
+<li>5+ years of experience</li>
+<li>Current company: Six Dee Telecom Solutions Private Limited (6D Technologies)</li>
+<li>Current project: CRM Core Platform</li>
+<li>Location listed on resume: Remote / Bengaluru</li>
+<li>Core domain: Telecom / CRM / BSS / enterprise platform development</li>
+<li>MCA from Vignan's Foundation for Science, Technology &amp; Research</li>
+<li>Current technical environment:</li>
+<li>Java 17</li>
+<li>Spring Boot</li>
+<li>Spring Data JPA</li>
+<li>Hibernate</li>
+<li>Microservices</li>
+<li>REST APIs</li>
+<li>ReactJS</li>
+<li>Camunda BPM</li>
+<li>Spring Batch</li>
+<li>SQL / MySQL</li>
+<li>Git / GitLab</li>
+<li>Maven</li>
+<li>JUnit</li>
+<li>Agile/Scrum</li>
+<li>Additional:</li>
+<li>OOP</li>
+<li>Design patterns</li>
+<li>transaction management</li>
+<li>multithreading</li>
+<li>collections</li>
+<li>streams</li>
+<li>exception handling</li>
+<li>performance optimization</li>
+<li>secure coding</li>
+<li>DSA</li>
+<li>production support</li>
+<li>RCA</li>
+<li>CI/CD support</li>
+<li>AI exposure currently:</li>
+<li>GitHub Copilot</li>
+<li>Cascade</li>
+<li>LLM-based coding assistants</li>
+<li>AI agents for code generation/test scaffolding</li>
+<li>Earlier academic AI project:</li>
+<li>Image Caption Generator</li>
+<li>CNN + LSTM</li>
+<li>NLP</li>
+<li>computer vision</li>
+</ul>
+<h2 id="how-to-position-this-profile">How to position this profile</h2>
+<p>Do NOT position as:</p>
+<blockquote>
+<p>Generic Java developer from a consulting/service company.</p>
+</blockquote>
+<p>Prefer:</p>
+<blockquote>
+<p>Java/Spring Boot product engineer with 5+ years of experience building enterprise telecom/BSS platforms using microservices, REST APIs, workflow automation, batch processing, SQL and React.</p>
+</blockquote>
+<p>Longer-term positioning:</p>
+<blockquote>
+<p>Java/Spring Boot product engineer specializing in enterprise distributed systems, cloud-native architecture and AI-enabled application engineering.</p>
+</blockquote>
+<hr />
+<h1 id="2-career-objective">2. Career Objective</h1>
+<h2 id="primary-goal">Primary goal</h2>
+<p>Move into a <strong>real product company</strong> where the work is primarily:</p>
+<ul>
+<li>product engineering</li>
+<li>SaaS</li>
+<li>enterprise software products</li>
+<li>telecom products</li>
+<li>BSS/OSS platforms</li>
+<li>CRM platforms</li>
+<li>billing/charging platforms</li>
+<li>FinTech platforms</li>
+<li>workflow products</li>
+<li>AI-enabled products</li>
+<li>developer platforms</li>
+<li>cloud platforms</li>
+</ul>
+<h2 id="avoid-as-primary-targets">Avoid as primary targets</h2>
+<ul>
+<li>IT service companies</li>
+<li>generic outsourcing companies</li>
+<li>staffing companies</li>
+<li>body-shopping companies</li>
+<li>consulting-led implementation companies</li>
+<li>roles where the product ownership is weak</li>
+</ul>
+<hr />
+<h1 id="3-product-company-target-categories">3. Product-Company Target Categories</h1>
+<h2 id="tier-1-telecom-product-companies">Tier 1: Telecom Product Companies</h2>
+<p>This is the closest match to current 6D experience.</p>
+<p>Study and track companies such as:</p>
+<ol>
+<li>Subex</li>
+<li>Netcracker</li>
+<li>MATRIXX Software</li>
+<li>Tecnotree</li>
+<li>CSG</li>
+<li>Hansen Technologies</li>
+<li>DigitalRoute</li>
+<li>Mavenir</li>
+<li>Amdocs</li>
+<li>Nokia</li>
+<li>Ericsson</li>
+<li>Huawei</li>
+</ol>
+<h3 id="for-every-company-research">For every company, research:</h3>
+<ul>
+<li>What product/platform do they build?</li>
+<li>Is it a true product company or mainly services/implementation?</li>
+<li>Main telecom domain:</li>
+<li>BSS</li>
+<li>OSS</li>
+<li>CRM</li>
+<li>billing</li>
+<li>charging</li>
+<li>mediation</li>
+<li>revenue assurance</li>
+<li>fraud management</li>
+<li>digital commerce</li>
+<li>customer experience</li>
+<li>network automation</li>
+<li>IoT</li>
+<li>Engineering locations in India</li>
+<li>Hyderabad opportunities</li>
+<li>Bengaluru opportunities</li>
+<li>Other Indian locations</li>
+<li>Typical Java/Spring Boot roles</li>
+<li>Typical experience requirement</li>
+<li>Product engineering culture</li>
+<li>Cloud stack</li>
+<li>Kubernetes usage</li>
+<li>Kafka/event-driven architecture</li>
+<li>AI/GenAI strategy</li>
+<li>Salary range where reliable public data exists</li>
+<li>Interview process where reliable data exists</li>
+<li>How well 6D experience maps to their requirements</li>
+<li>Skills missing from current profile</li>
+<li>Priority: Tier 1 / Tier 2 / Tier 3</li>
+</ul>
+<hr />
+<h1 id="4-important-direct-competitors-domain-neighbours">4. Important Direct Competitors / Domain Neighbours</h1>
+<p>Understand the telecom/BSS competitive landscape.</p>
+<h2 id="bss-oss-telecom-software">BSS / OSS / Telecom Software</h2>
+<p>Study:</p>
+<ul>
+<li>Subex</li>
+<li>Netcracker</li>
+<li>MATRIXX Software</li>
+<li>Tecnotree</li>
+<li>CSG</li>
+<li>Hansen Technologies</li>
+<li>DigitalRoute</li>
+<li>Amdocs</li>
+<li>Mavenir</li>
+<li>Nokia</li>
+<li>Ericsson</li>
+<li>Huawei</li>
+<li>Cerillion</li>
+<li>Totogi</li>
+<li>Optiva</li>
+<li>Sigma Software / telecom product businesses where genuinely product-led</li>
+<li>Tecnotree ecosystem</li>
+<li>Openet-related technology and its current ownership/history</li>
+</ul>
+<p>For each, understand:</p>
+<ul>
+<li>Product portfolio</li>
+<li>Target telecom operators</li>
+<li>Architecture</li>
+<li>Cloud strategy</li>
+<li>AI strategy</li>
+<li>Competitive differentiation</li>
+<li>Where 6D fits</li>
+<li>Where a Java engineer fits</li>
+<li>What skills are valued</li>
+</ul>
+<p>Do not automatically label every company above as a direct competitor. Distinguish:
+- direct competitor
+- adjacent telecom product
+- network technology company
+- enterprise platform
+- SaaS/product company.</p>
+<hr />
+<h1 id="5-b2b-saas-targets">5. B2B SaaS Targets</h1>
+<p>Do not restrict the career to telecom.</p>
+<p>Research product companies in:</p>
+<h3 id="crm-customer-experience">CRM / Customer Experience</h3>
+<ul>
+<li>Zoho</li>
+<li>Freshworks</li>
+<li>Salesforce</li>
+<li>ServiceNow</li>
+</ul>
+<h3 id="erp-enterprise-platforms">ERP / Enterprise Platforms</h3>
+<ul>
+<li>SAP</li>
+<li>Oracle</li>
+<li>Microsoft</li>
+<li>other strong product-led enterprise software companies</li>
+</ul>
+<h3 id="supply-chain-enterprise-planning">Supply Chain / Enterprise Planning</h3>
+<ul>
+<li>Blue Yonder</li>
+<li>other genuine enterprise software product companies</li>
+</ul>
+<h3 id="developer-api-platforms">Developer / API Platforms</h3>
+<p>Research Indian and global product companies with:
+- API platforms
+- developer tooling
+- observability
+- integration platforms
+- identity/security platforms
+- workflow automation.</p>
+<p>For every company:
+- product
+- customer type
+- tech stack
+- India engineering presence
+- Hyderabad/Bengaluru presence
+- Java/Spring opportunities
+- AI direction
+- fit for this profile.</p>
+<hr />
+<h1 id="6-fintech-product-targets">6. FinTech Product Targets</h1>
+<p>Research product companies in:</p>
+<ul>
+<li>payments</li>
+<li>banking infrastructure</li>
+<li>lending platforms</li>
+<li>fraud detection</li>
+<li>risk platforms</li>
+<li>financial APIs</li>
+<li>merchant platforms</li>
+<li>wealth-tech infrastructure</li>
+<li>transaction processing</li>
+</ul>
+<p>Important technical concepts to learn for this transition:</p>
+<ul>
+<li>idempotency</li>
+<li>distributed transactions</li>
+<li>eventual consistency</li>
+<li>ledger concepts</li>
+<li>payment states</li>
+<li>retries</li>
+<li>duplicate prevention</li>
+<li>Kafka</li>
+<li>Redis</li>
+<li>database consistency</li>
+<li>audit trails</li>
+<li>security</li>
+<li>encryption</li>
+<li>OAuth2/OIDC</li>
+<li>rate limiting</li>
+<li>high availability</li>
+<li>disaster recovery.</li>
+</ul>
+<p>Do not focus on generic FinTech service companies.</p>
+<hr />
+<h1 id="7-ai-native-product-companies">7. AI-Native Product Companies</h1>
+<p>Long-term target category:</p>
+<ul>
+<li>AI SaaS</li>
+<li>enterprise AI</li>
+<li>AI agents</li>
+<li>AI workflow automation</li>
+<li>enterprise search</li>
+<li>AI customer support</li>
+<li>AI developer tools</li>
+<li>AI coding platforms</li>
+<li>AI observability</li>
+<li>AI security</li>
+<li>AI infrastructure</li>
+</ul>
+<p>Goal:</p>
+<p>Become an engineer who can build AI features inside production applications, not merely someone who uses ChatGPT.</p>
+<hr />
+<h1 id="8-recommended-career-positioning">8. Recommended Career Positioning</h1>
+<h2 id="short-term-job-titles">Short-term job titles</h2>
+<p>Prioritize:</p>
+<ul>
+<li>Senior Software Engineer</li>
+<li>Senior Backend Engineer</li>
+<li>Senior Java Engineer</li>
+<li>Product Engineer</li>
+<li>Software Engineer III</li>
+<li>Full Stack Engineer</li>
+<li>Platform Engineer</li>
+<li>Backend Engineer</li>
+<li>Java/Spring Boot Engineer</li>
+</ul>
+<h2 id="ai-adjacent-roles">AI-adjacent roles</h2>
+<p>After building the required skills:</p>
+<ul>
+<li>AI Application Engineer</li>
+<li>AI Platform Engineer</li>
+<li>Backend Engineer — AI Platform</li>
+<li>Software Engineer — GenAI</li>
+<li>Product Engineer — AI</li>
+<li>LLM Application Engineer</li>
+</ul>
+<p>Do NOT immediately target:</p>
+<ul>
+<li>ML Research Engineer</li>
+<li>Deep Learning Research Scientist</li>
+<li>Computer Vision Research Scientist</li>
+<li>Foundation Model Engineer</li>
+</ul>
+<p>unless deliberately retraining for those careers.</p>
+<hr />
+<h1 id="9-target-technical-profile">9. Target Technical Profile</h1>
+<p>The desired 12-month technical profile:</p>
+<pre><code class="language-text">Java 17/21
+Spring Boot
+Spring AI
+Microservices
+Distributed Systems
+Kafka
+Redis
+PostgreSQL
+React
+Docker
+Kubernetes
+AWS
+REST APIs
+OAuth2/OIDC
+System Design
+RAG
+Vector Databases
+LLM APIs
+Tool Calling
+AI Agents
+MCP
+AI Evaluation
+Guardrails
+Observability
+</code></pre>
+<hr />
+<h1 id="10-core-java-zero-to-advanced-interview-level">10. Core Java — Zero to Advanced Interview Level</h1>
+<p>Study deeply:</p>
+<h2 id="language">Language</h2>
+<ul>
+<li>Java 8 features</li>
+<li>Java 11</li>
+<li>Java 17</li>
+<li>Java 21 overview</li>
+<li>records</li>
+<li>sealed classes</li>
+<li>pattern matching</li>
+<li>switch expressions</li>
+<li>var</li>
+<li>Optional</li>
+<li>functional interfaces</li>
+<li>lambdas</li>
+<li>method references</li>
+</ul>
+<h2 id="oop">OOP</h2>
+<ul>
+<li>encapsulation</li>
+<li>inheritance</li>
+<li>abstraction</li>
+<li>polymorphism</li>
+<li>composition vs inheritance</li>
+<li>SOLID</li>
+</ul>
+<h2 id="collections">Collections</h2>
+<ul>
+<li>ArrayList</li>
+<li>LinkedList</li>
+<li>HashMap</li>
+<li>HashSet</li>
+<li>TreeMap</li>
+<li>TreeSet</li>
+<li>ConcurrentHashMap</li>
+<li>Queue</li>
+<li>Deque</li>
+<li>PriorityQueue</li>
+</ul>
+<p>Know internals:
+- hashing
+- collisions
+- resizing
+- load factor
+- equals/hashCode
+- ordering
+- concurrency.</p>
+<h2 id="streams">Streams</h2>
+<ul>
+<li>map</li>
+<li>filter</li>
+<li>flatMap</li>
+<li>reduce</li>
+<li>collect</li>
+<li>groupingBy</li>
+<li>partitioningBy</li>
+<li>mapping</li>
+<li>sorting</li>
+<li>parallel streams</li>
+<li>stream pitfalls</li>
+</ul>
+<h2 id="exceptions">Exceptions</h2>
+<ul>
+<li>checked vs unchecked</li>
+<li>custom exceptions</li>
+<li>exception propagation</li>
+<li>global handling</li>
+<li>best practices</li>
+</ul>
+<h2 id="multithreading">Multithreading</h2>
+<p>Deeply learn:</p>
+<ul>
+<li>Thread</li>
+<li>Runnable</li>
+<li>Callable</li>
+<li>Future</li>
+<li>ExecutorService</li>
+<li>CompletableFuture</li>
+<li>synchronized</li>
+<li>volatile</li>
+<li>atomic classes</li>
+<li>locks</li>
+<li>ReentrantLock</li>
+<li>ReadWriteLock</li>
+<li>deadlock</li>
+<li>race condition</li>
+<li>starvation</li>
+<li>thread pools</li>
+<li>virtual threads overview</li>
+</ul>
+<h2 id="jvm">JVM</h2>
+<ul>
+<li>heap</li>
+<li>stack</li>
+<li>metaspace</li>
+<li>GC</li>
+<li>G1</li>
+<li>object lifecycle</li>
+<li>class loading</li>
+<li>JIT</li>
+<li>memory leaks</li>
+<li>profiling.</li>
+</ul>
+<hr />
+<h1 id="11-spring-framework">11. Spring Framework</h1>
+<p>Study from fundamentals to production architecture.</p>
+<h2 id="core">Core</h2>
+<ul>
+<li>IoC</li>
+<li>DI</li>
+<li>Bean lifecycle</li>
+<li>ApplicationContext</li>
+<li>component scanning</li>
+<li>@Component</li>
+<li>@Service</li>
+<li>@Repository</li>
+<li>@Controller</li>
+<li>@RestController</li>
+<li>@Configuration</li>
+<li>@Bean</li>
+<li>scopes</li>
+<li>profiles</li>
+</ul>
+<h2 id="spring-boot">Spring Boot</h2>
+<ul>
+<li>auto configuration</li>
+<li>starters</li>
+<li>configuration properties</li>
+<li>application.yml</li>
+<li>Actuator</li>
+<li>health checks</li>
+<li>profiles</li>
+<li>externalized configuration</li>
+</ul>
+<h2 id="spring-mvc">Spring MVC</h2>
+<ul>
+<li>request lifecycle</li>
+<li>DispatcherServlet</li>
+<li>filters</li>
+<li>interceptors</li>
+<li>validation</li>
+<li>exception handling</li>
+<li>REST design</li>
+</ul>
+<h2 id="spring-security">Spring Security</h2>
+<ul>
+<li>authentication</li>
+<li>authorization</li>
+<li>JWT</li>
+<li>OAuth2</li>
+<li>OIDC</li>
+<li>Keycloak</li>
+<li>RBAC</li>
+<li>method security</li>
+<li>security filters</li>
+<li>CORS</li>
+<li>CSRF.</li>
+</ul>
+<hr />
+<h1 id="12-jpa-hibernate">12. JPA / Hibernate</h1>
+<p>Deep study:</p>
+<ul>
+<li>entity lifecycle</li>
+<li>persistence context</li>
+<li>first-level cache</li>
+<li>second-level cache</li>
+<li>lazy/eager loading</li>
+<li>N+1 problem</li>
+<li>fetch join</li>
+<li>EntityGraph</li>
+<li>JPQL</li>
+<li>native queries</li>
+<li>projections</li>
+<li>pagination</li>
+<li>dirty checking</li>
+<li>cascading</li>
+<li>orphan removal</li>
+<li>optimistic locking</li>
+<li>pessimistic locking</li>
+<li>transaction propagation</li>
+<li>isolation</li>
+<li>database indexes.</li>
+</ul>
+<hr />
+<h1 id="13-microservices">13. Microservices</h1>
+<p>Deeply understand:</p>
+<ul>
+<li>service boundaries</li>
+<li>database-per-service</li>
+<li>API gateway</li>
+<li>service discovery</li>
+<li>synchronous communication</li>
+<li>asynchronous communication</li>
+<li>REST</li>
+<li>gRPC overview</li>
+<li>retries</li>
+<li>timeout</li>
+<li>circuit breaker</li>
+<li>bulkhead</li>
+<li>rate limiting</li>
+<li>idempotency</li>
+<li>distributed transactions</li>
+<li>Saga pattern</li>
+<li>eventual consistency</li>
+<li>outbox pattern</li>
+<li>CQRS</li>
+<li>event-driven architecture.</li>
+</ul>
+<hr />
+<h1 id="14-kafka">14. Kafka</h1>
+<p>This is a HIGH PRIORITY topic.</p>
+<p>Study:</p>
+<ul>
+<li>broker</li>
+<li>topic</li>
+<li>partition</li>
+<li>producer</li>
+<li>consumer</li>
+<li>consumer group</li>
+<li>offset</li>
+<li>replication</li>
+<li>retention</li>
+<li>ordering</li>
+<li>rebalancing</li>
+<li>partition strategy</li>
+<li>key selection</li>
+<li>delivery semantics</li>
+<li>at-most-once</li>
+<li>at-least-once</li>
+<li>exactly-once concepts</li>
+<li>idempotent producers</li>
+<li>transactions</li>
+<li>dead-letter topics</li>
+<li>retry topics</li>
+<li>schema evolution</li>
+<li>Avro/Schema Registry overview.</li>
+</ul>
+<p>Be able to answer:</p>
+<blockquote>
+<p>When should REST be used and when should Kafka be used?</p>
+</blockquote>
+<hr />
+<h1 id="15-redis">15. Redis</h1>
+<p>Study:</p>
+<ul>
+<li>caching</li>
+<li>TTL</li>
+<li>eviction</li>
+<li>cache-aside</li>
+<li>write-through</li>
+<li>write-behind</li>
+<li>distributed lock</li>
+<li>rate limiting</li>
+<li>session storage</li>
+<li>pub/sub</li>
+<li>Redis data structures</li>
+<li>cache invalidation</li>
+<li>cache stampede.</li>
+</ul>
+<hr />
+<h1 id="16-sql-database">16. SQL / Database</h1>
+<p>Study:</p>
+<ul>
+<li>joins</li>
+<li>indexes</li>
+<li>composite indexes</li>
+<li>execution plans</li>
+<li>transactions</li>
+<li>isolation levels</li>
+<li>deadlocks</li>
+<li>normalization</li>
+<li>denormalization</li>
+<li>pagination</li>
+<li>query optimization</li>
+<li>locking</li>
+<li>partitioning</li>
+<li>replication</li>
+<li>read/write splitting</li>
+<li>connection pooling.</li>
+</ul>
+<p>Use PostgreSQL as the advanced-learning database, while maintaining MySQL knowledge.</p>
+<hr />
+<h1 id="17-system-design">17. System Design</h1>
+<p>This is a major priority.</p>
+<p>Study:</p>
+<h2 id="fundamentals">Fundamentals</h2>
+<ul>
+<li>scalability</li>
+<li>availability</li>
+<li>reliability</li>
+<li>latency</li>
+<li>throughput</li>
+<li>consistency</li>
+<li>CAP theorem</li>
+<li>ACID</li>
+<li>BASE</li>
+<li>horizontal scaling</li>
+<li>vertical scaling</li>
+<li>load balancing</li>
+<li>caching</li>
+<li>sharding</li>
+<li>replication</li>
+<li>queues</li>
+<li>event streaming</li>
+<li>CDN</li>
+<li>API gateway</li>
+<li>observability.</li>
+</ul>
+<h2 id="design-problems">Design problems</h2>
+<p>Practice:</p>
+<ol>
+<li>URL shortener</li>
+<li>Notification service</li>
+<li>Payment system</li>
+<li>Order management</li>
+<li>E-commerce backend</li>
+<li>CRM</li>
+<li>Billing system</li>
+<li>Subscription platform</li>
+<li>File storage</li>
+<li>Chat system</li>
+<li>Rate limiter</li>
+<li>Job scheduler</li>
+<li>Workflow engine</li>
+<li>Audit system</li>
+<li>Multi-tenant SaaS</li>
+<li>Telecom CRM</li>
+<li>Telecom billing</li>
+<li>AI/RAG platform</li>
+<li>AI agent platform</li>
+<li>API gateway.</li>
+</ol>
+<p>For every design:
+- requirements
+- APIs
+- data model
+- architecture
+- scaling
+- failure handling
+- consistency
+- security
+- observability
+- trade-offs.</p>
+<hr />
+<h1 id="18-cloud-aws">18. Cloud — AWS</h1>
+<p>Learn enough to design and operate applications.</p>
+<h2 id="aws-fundamentals">AWS fundamentals</h2>
+<ul>
+<li>IAM</li>
+<li>VPC</li>
+<li>EC2</li>
+<li>S3</li>
+<li>RDS</li>
+<li>ElastiCache</li>
+<li>CloudWatch</li>
+<li>Lambda</li>
+<li>SQS</li>
+<li>SNS</li>
+<li>API Gateway</li>
+<li>ECS</li>
+<li>EKS</li>
+<li>load balancers</li>
+<li>autoscaling</li>
+<li>Secrets Manager</li>
+<li>Parameter Store.</li>
+</ul>
+<p>Understand:</p>
+<pre><code class="language-text">Spring Boot
+    ↓
+Docker
+    ↓
+AWS
+    ↓
+Kubernetes/EKS
+    ↓
+Managed DB / Kafka / Redis
+</code></pre>
+<hr />
+<h1 id="19-docker">19. Docker</h1>
+<p>Study:</p>
+<ul>
+<li>image</li>
+<li>container</li>
+<li>Dockerfile</li>
+<li>layers</li>
+<li>volumes</li>
+<li>networks</li>
+<li>environment variables</li>
+<li>multi-stage builds</li>
+<li>Docker Compose</li>
+<li>image optimization</li>
+<li>container security.</li>
+</ul>
+<p>Build Spring Boot + PostgreSQL + Redis + Kafka locally using Docker Compose.</p>
+<hr />
+<h1 id="20-kubernetes">20. Kubernetes</h1>
+<p>Study:</p>
+<ul>
+<li>Pod</li>
+<li>Deployment</li>
+<li>ReplicaSet</li>
+<li>Service</li>
+<li>Ingress</li>
+<li>ConfigMap</li>
+<li>Secret</li>
+<li>Namespace</li>
+<li>HPA</li>
+<li>readiness probe</li>
+<li>liveness probe</li>
+<li>startup probe</li>
+<li>rolling update</li>
+<li>rollback</li>
+<li>persistent volumes</li>
+<li>resource limits</li>
+<li>requests</li>
+<li>service discovery.</li>
+</ul>
+<hr />
+<h1 id="21-observability">21. Observability</h1>
+<p>Learn:</p>
+<ul>
+<li>logs</li>
+<li>metrics</li>
+<li>traces</li>
+<li>correlation IDs</li>
+<li>distributed tracing</li>
+<li>OpenTelemetry</li>
+<li>Prometheus</li>
+<li>Grafana</li>
+<li>ELK/OpenSearch overview</li>
+<li>alerting</li>
+<li>SLO</li>
+<li>SLA</li>
+<li>error budgets.</li>
+</ul>
+<p>Understand production debugging.</p>
+<hr />
+<h1 id="22-security">22. Security</h1>
+<p>Study:</p>
+<ul>
+<li>authentication</li>
+<li>authorization</li>
+<li>OAuth2</li>
+<li>OIDC</li>
+<li>JWT</li>
+<li>Keycloak</li>
+<li>RBAC</li>
+<li>password hashing</li>
+<li>encryption</li>
+<li>secrets</li>
+<li>HTTPS</li>
+<li>CORS</li>
+<li>CSRF</li>
+<li>SQL injection</li>
+<li>XSS</li>
+<li>SSRF</li>
+<li>secure headers</li>
+<li>API security</li>
+<li>rate limiting</li>
+<li>OWASP Top 10.</li>
+</ul>
+<hr />
+<h1 id="23-react">23. React</h1>
+<p>Current React exposure should become interview-safe rather than pretending to be a frontend specialist.</p>
+<p>Study:</p>
+<ul>
+<li>components</li>
+<li>props</li>
+<li>state</li>
+<li>hooks</li>
+<li>useEffect</li>
+<li>useMemo</li>
+<li>useCallback</li>
+<li>Context</li>
+<li>forms</li>
+<li>API integration</li>
+<li>error/loading states</li>
+<li>routing</li>
+<li>state management overview</li>
+<li>component design</li>
+<li>performance</li>
+<li>TypeScript basics.</li>
+</ul>
+<p>Goal:</p>
+<blockquote>
+<p>Strong enough for full-stack product engineering, not pure frontend specialization.</p>
+</blockquote>
+<hr />
+<h1 id="24-ai-roadmap-applied-ai-for-a-java-engineer">24. AI Roadmap — Applied AI for a Java Engineer</h1>
+<h2 id="key-principle">Key principle</h2>
+<p>Do NOT spend months trying to become an ML researcher.</p>
+<p>The target is:</p>
+<blockquote>
+<p><strong>AI-enabled Product Engineer / AI Application Engineer</strong></p>
+</blockquote>
+<hr />
+<h1 id="25-llm-fundamentals">25. LLM Fundamentals</h1>
+<p>Study:</p>
+<ul>
+<li>LLM</li>
+<li>tokens</li>
+<li>tokenization</li>
+<li>context window</li>
+<li>inference</li>
+<li>temperature</li>
+<li>top-p</li>
+<li>hallucination</li>
+<li>system prompt</li>
+<li>user prompt</li>
+<li>structured output</li>
+<li>function/tool calling</li>
+<li>model limitations</li>
+<li>latency</li>
+<li>cost</li>
+<li>model selection.</li>
+</ul>
+<p>Understand the high-level pipeline:</p>
+<pre><code class="language-text">Text
+ ↓
+Tokens
+ ↓
+Embeddings / representations
+ ↓
+Transformer
+ ↓
+Next-token probabilities
+ ↓
+Generated response
+</code></pre>
+<hr />
+<h1 id="26-transformer-fundamentals">26. Transformer Fundamentals</h1>
+<p>Learn conceptually:</p>
+<ul>
+<li>neural networks overview</li>
+<li>embeddings</li>
+<li>positional encoding</li>
+<li>attention</li>
+<li>self-attention</li>
+<li>multi-head attention</li>
+<li>encoder</li>
+<li>decoder</li>
+<li>transformer</li>
+<li>pretraining</li>
+<li>fine-tuning</li>
+<li>instruction tuning</li>
+<li>RLHF overview</li>
+<li>inference.</li>
+</ul>
+<p>Do not prioritize implementing a transformer from scratch.</p>
+<hr />
+<h1 id="27-prompt-engineering">27. Prompt Engineering</h1>
+<p>Study:</p>
+<ul>
+<li>system instructions</li>
+<li>role/task/context/output structure</li>
+<li>few-shot prompting</li>
+<li>zero-shot</li>
+<li>chain-of-thought concept without exposing private reasoning</li>
+<li>structured JSON output</li>
+<li>prompt templates</li>
+<li>context injection</li>
+<li>prompt versioning</li>
+<li>prompt security</li>
+<li>prompt injection attacks.</li>
+</ul>
+<hr />
+<h1 id="28-embeddings">28. Embeddings</h1>
+<p>Deeply understand:</p>
+<ul>
+<li>embedding vectors</li>
+<li>semantic similarity</li>
+<li>cosine similarity</li>
+<li>vector distance</li>
+<li>chunking</li>
+<li>metadata</li>
+<li>top-K search</li>
+<li>filtering</li>
+<li>reranking.</li>
+</ul>
+<p>Pipeline:</p>
+<pre><code class="language-text">Document
+ ↓
+Chunk
+ ↓
+Embedding model
+ ↓
+Vector
+ ↓
+Vector DB
+</code></pre>
+<hr />
+<h1 id="29-vector-databases">29. Vector Databases</h1>
+<p>Prioritize:</p>
+<h2 id="postgresql-pgvector">PostgreSQL + pgvector</h2>
+<p>Because it fits the current backend skillset.</p>
+<p>Also understand conceptually:</p>
+<ul>
+<li>Pinecone</li>
+<li>Weaviate</li>
+<li>Milvus</li>
+<li>Elasticsearch/OpenSearch vector search.</li>
+</ul>
+<p>Learn:
+- vector indexes
+- similarity search
+- metadata filtering
+- hybrid search
+- reranking.</p>
+<hr />
+<h1 id="30-rag">30. RAG</h1>
+<p>This is one of the most important AI topics.</p>
+<p>Understand:</p>
+<pre><code class="language-text">Documents
+ ↓
+Ingestion
+ ↓
+Parsing
+ ↓
+Chunking
+ ↓
+Embedding
+ ↓
+Vector DB
+ ↓
+Retriever
+ ↓
+Reranker
+ ↓
+Relevant context
+ ↓
+LLM
+ ↓
+Answer
+</code></pre>
+<p>Study:</p>
+<ul>
+<li>naive RAG</li>
+<li>advanced RAG</li>
+<li>chunking strategies</li>
+<li>metadata filtering</li>
+<li>hybrid search</li>
+<li>reranking</li>
+<li>query rewriting</li>
+<li>multi-query retrieval</li>
+<li>contextual compression</li>
+<li>citation generation</li>
+<li>hallucination reduction</li>
+<li>RAG evaluation.</li>
+</ul>
+<hr />
+<h1 id="31-spring-ai">31. Spring AI</h1>
+<p>High priority for this profile.</p>
+<p>Study current Spring AI capabilities and official documentation before implementation.</p>
+<p>Topics:</p>
+<ul>
+<li>ChatClient</li>
+<li>model integrations</li>
+<li>prompt templates</li>
+<li>structured output</li>
+<li>embeddings</li>
+<li>vector stores</li>
+<li>RAG</li>
+<li>advisors</li>
+<li>tool calling</li>
+<li>memory</li>
+<li>evaluation</li>
+<li>observability</li>
+<li>MCP integration where supported.</li>
+</ul>
+<p>Build examples using Java/Spring Boot.</p>
+<hr />
+<h1 id="32-langchain4j">32. LangChain4j</h1>
+<p>Study enough to understand:</p>
+<ul>
+<li>model integration</li>
+<li>prompt templates</li>
+<li>AI services</li>
+<li>tools</li>
+<li>RAG</li>
+<li>memory</li>
+<li>agents</li>
+<li>vector stores</li>
+<li>retrieval.</li>
+</ul>
+<p>Do not learn every framework simultaneously.</p>
+<p>Priority:</p>
+<ol>
+<li>Spring AI</li>
+<li>LangChain4j concepts</li>
+<li>Compare with Python ecosystem conceptually.</li>
+</ol>
+<hr />
+<h1 id="33-ai-tool-calling">33. AI Tool Calling</h1>
+<p>Understand:</p>
+<pre><code class="language-text">User
+ ↓
+LLM
+ ↓
+Tool selection
+ ↓
+Application
+ ↓
+Tool/API/database
+ ↓
+Result
+ ↓
+LLM
+ ↓
+Final answer
+</code></pre>
+<p>Study:
+- tool schema
+- validation
+- authorization
+- retries
+- timeout
+- tool failure
+- sensitive tools
+- human approval
+- audit logs.</p>
+<hr />
+<h1 id="34-ai-agents">34. AI Agents</h1>
+<p>Understand the difference between:</p>
+<h3 id="simple-llm-call">Simple LLM call</h3>
+<pre><code class="language-text">Input → LLM → Output
+</code></pre>
+<h3 id="rag">RAG</h3>
+<pre><code class="language-text">Input → Retrieve → LLM → Output
+</code></pre>
+<h3 id="tool-calling">Tool calling</h3>
+<pre><code class="language-text">Input → LLM → Tool → Result → LLM
+</code></pre>
+<h3 id="agent">Agent</h3>
+<pre><code class="language-text">Goal
+ ↓
+Plan/decide
+ ↓
+Tool
+ ↓
+Observe
+ ↓
+Decide next action
+ ↓
+Tool
+ ↓
+Final result
+</code></pre>
+<p>Study:</p>
+<ul>
+<li>agent loop</li>
+<li>planning</li>
+<li>state</li>
+<li>memory</li>
+<li>tools</li>
+<li>orchestration</li>
+<li>retries</li>
+<li>human-in-the-loop</li>
+<li>guardrails</li>
+<li>permissions</li>
+<li>observability</li>
+<li>deterministic vs autonomous workflows.</li>
+</ul>
+<hr />
+<h1 id="35-ai-workflow-automation">35. AI + Workflow Automation</h1>
+<p>This is a special opportunity because of existing Camunda experience.</p>
+<p>Understand how:</p>
+<pre><code class="language-text">Business workflow
+       +
+AI decision/task
+       +
+Human approval
+       +
+Enterprise APIs
+</code></pre>
+<p>can create intelligent workflows.</p>
+<p>Example:</p>
+<pre><code class="language-text">Customer issue
+      ↓
+CRM
+      ↓
+AI diagnosis
+      ↓
+Billing check
+      ↓
+Knowledge retrieval
+      ↓
+Recommendation
+      ↓
+Human approval
+      ↓
+Workflow execution
+</code></pre>
+<p>Study:
+- AI-assisted workflows
+- deterministic workflow vs agentic workflow
+- human-in-the-loop
+- business rules
+- auditability
+- compliance
+- retries
+- state management.</p>
+<hr />
+<h1 id="36-mcp-model-context-protocol">36. MCP — Model Context Protocol</h1>
+<p>Learn:</p>
+<ul>
+<li>what MCP is</li>
+<li>client/server architecture</li>
+<li>tools</li>
+<li>resources</li>
+<li>prompts</li>
+<li>context exchange</li>
+<li>security</li>
+<li>authorization</li>
+<li>enterprise integration.</li>
+</ul>
+<p>Mental model:</p>
+<pre><code class="language-text">LLM
+ |
+MCP
+ |
+ +--- Database
+ +--- Git
+ +--- Jira
+ +--- Internal APIs
+ +--- Files
+ +--- Enterprise tools
+</code></pre>
+<p>Understand how an enterprise product could expose safe tools/context to an AI application.</p>
+<hr />
+<h1 id="37-ai-evaluation">37. AI Evaluation</h1>
+<p>Do not stop at "the LLM gives a good answer."</p>
+<p>Study:</p>
+<ul>
+<li>correctness</li>
+<li>groundedness</li>
+<li>relevance</li>
+<li>faithfulness</li>
+<li>retrieval precision</li>
+<li>retrieval recall</li>
+<li>latency</li>
+<li>cost</li>
+<li>hallucination rate</li>
+<li>human evaluation</li>
+<li>automated evaluation</li>
+<li>regression testing</li>
+<li>prompt/model versioning.</li>
+</ul>
+<p>For RAG:
+- context relevance
+- answer relevance
+- faithfulness.</p>
+<hr />
+<h1 id="38-ai-security">38. AI Security</h1>
+<p>Study:</p>
+<ul>
+<li>prompt injection</li>
+<li>indirect prompt injection</li>
+<li>data leakage</li>
+<li>sensitive data exposure</li>
+<li>excessive tool permissions</li>
+<li>insecure tool execution</li>
+<li>model output validation</li>
+<li>jailbreak concepts</li>
+<li>tenant isolation</li>
+<li>authorization</li>
+<li>audit logging</li>
+<li>rate limiting</li>
+<li>secrets management.</li>
+</ul>
+<p>For enterprise AI, security is mandatory.</p>
+<hr />
+<h1 id="39-ai-guardrails">39. AI Guardrails</h1>
+<p>Learn:</p>
+<ul>
+<li>input validation</li>
+<li>output validation</li>
+<li>schema validation</li>
+<li>allowed tools</li>
+<li>tool permission model</li>
+<li>PII handling</li>
+<li>content filtering</li>
+<li>human approval</li>
+<li>confidence thresholds</li>
+<li>fallback models</li>
+<li>fallback workflows.</li>
+</ul>
+<hr />
+<h1 id="40-ai-cost-performance">40. AI Cost &amp; Performance</h1>
+<p>Study:</p>
+<ul>
+<li>token cost</li>
+<li>prompt size</li>
+<li>context reduction</li>
+<li>caching</li>
+<li>model selection</li>
+<li>smaller model vs larger model</li>
+<li>batching</li>
+<li>streaming</li>
+<li>latency</li>
+<li>embedding cost</li>
+<li>retrieval cost</li>
+<li>inference cost.</li>
+</ul>
+<p>A product engineer must think about unit economics.</p>
+<hr />
+<h1 id="41-python-only-the-amount-needed-initially">41. Python — Only the Amount Needed Initially</h1>
+<p>Learn enough Python for AI ecosystem compatibility:</p>
+<ul>
+<li>syntax</li>
+<li>functions</li>
+<li>classes</li>
+<li>lists/dicts/sets</li>
+<li>comprehensions</li>
+<li>virtual environments</li>
+<li>pip</li>
+<li>FastAPI overview</li>
+<li>basic notebooks</li>
+<li>calling LLM APIs</li>
+<li>basic data handling.</li>
+</ul>
+<p>Do not abandon Java.</p>
+<p>Primary production language:</p>
+<blockquote>
+<p>Java</p>
+</blockquote>
+<p>Python:</p>
+<blockquote>
+<p>supporting AI/tooling language.</p>
+</blockquote>
+<hr />
+<h1 id="42-ai-project-portfolio">42. AI Project Portfolio</h1>
+<p>Build these projects in order.</p>
+<h2 id="project-1-enterprise-rag-assistant">Project 1 — Enterprise RAG Assistant</h2>
+<p>Stack:</p>
+<pre><code class="language-text">React
+Spring Boot
+Spring AI
+PostgreSQL
+pgvector
+LLM API
+Docker
+</code></pre>
+<p>Features:</p>
+<ul>
+<li>document upload</li>
+<li>parsing</li>
+<li>chunking</li>
+<li>embeddings</li>
+<li>vector search</li>
+<li>RAG</li>
+<li>citations</li>
+<li>conversation</li>
+<li>feedback</li>
+<li>authentication.</li>
+</ul>
+<hr />
+<h2 id="project-2-ai-telecom-support-assistant">Project 2 — AI Telecom Support Assistant</h2>
+<p>Domain-specific.</p>
+<p>Input:</p>
+<blockquote>
+<p>Customer has billing/plan/service problem.</p>
+</blockquote>
+<p>System:</p>
+<pre><code class="language-text">React
+ ↓
+Spring Boot
+ ↓
+AI Orchestrator
+ ├── CRM tool
+ ├── Billing tool
+ ├── Customer tool
+ ├── Knowledge base
+ └── Ticket tool
+</code></pre>
+<p>The AI should retrieve information and call tools rather than inventing customer data.</p>
+<hr />
+<h2 id="project-3-ai-workflow-agent">Project 3 — AI Workflow Agent</h2>
+<p>Use:</p>
+<ul>
+<li>Spring Boot</li>
+<li>Camunda</li>
+<li>Spring AI</li>
+<li>PostgreSQL</li>
+<li>Kafka</li>
+<li>Redis</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-text">Request
+ ↓
+Workflow
+ ↓
+AI classification
+ ↓
+Business rules
+ ↓
+Tool/API call
+ ↓
+Human approval
+ ↓
+Workflow completion
+</code></pre>
+<p>This directly connects your current Camunda experience with AI.</p>
+<hr />
+<h2 id="project-4-event-driven-ai-platform">Project 4 — Event-Driven AI Platform</h2>
+<p>Architecture:</p>
+<pre><code class="language-text">React
+ ↓
+API Gateway
+ ↓
+Spring Boot
+ ↓
+Kafka
+ ↓
+Multiple services
+ ↓
+AI service
+ ↓
+Vector DB
+ ↓
+Redis
+ ↓
+PostgreSQL
+</code></pre>
+<p>Add:
+- Docker
+- Kubernetes
+- observability
+- security
+- retries
+- DLQ
+- audit.</p>
+<hr />
+<h2 id="project-5-multi-tenant-ai-saas">Project 5 — Multi-Tenant AI SaaS</h2>
+<p>This should be an advanced portfolio project.</p>
+<p>Features:</p>
+<ul>
+<li>organizations</li>
+<li>users</li>
+<li>RBAC</li>
+<li>tenant isolation</li>
+<li>document ingestion</li>
+<li>per-tenant vector search</li>
+<li>usage limits</li>
+<li>token tracking</li>
+<li>billing concepts</li>
+<li>audit logs</li>
+<li>AI evaluation</li>
+<li>observability.</li>
+</ul>
+<p>This demonstrates actual product engineering.</p>
+<hr />
+<h1 id="43-resume-transformation">43. Resume Transformation</h1>
+<p>Current resume already demonstrates:
+- Java
+- Spring Boot
+- microservices
+- JPA/Hibernate
+- Camunda
+- Spring Batch
+- React
+- SQL
+- GitLab
+- production support
+- performance optimization. </p>
+<p>Improve future resume toward:</p>
+<pre><code class="language-text">Senior Product Software Engineer
+Java | Spring Boot | Microservices | Kafka | AWS | Kubernetes
+AI Applications | RAG | Spring AI | Vector Search | AI Agents
+</code></pre>
+<p>Do not claim technologies before actually learning/building with them.</p>
+<p>Do not claim:
+- ML engineer
+- AI researcher
+- Kubernetes expert
+- AWS expert
+- React expert</p>
+<p>unless the evidence supports it.</p>
+<hr />
+<h1 id="44-interview-preparation">44. Interview Preparation</h1>
+<h2 id="java">Java</h2>
+<p>Prepare:
+- OOP
+- collections
+- HashMap internals
+- equals/hashCode
+- streams
+- Optional
+- concurrency
+- ExecutorService
+- CompletableFuture
+- JVM
+- GC
+- Java 17 features.</p>
+<h2 id="spring">Spring</h2>
+<p>Prepare:
+- dependency injection
+- bean lifecycle
+- component scanning
+- auto configuration
+- Spring Boot internals
+- REST
+- transactions
+- security
+- JPA
+- exception handling.</p>
+<h2 id="microservices">Microservices</h2>
+<p>Prepare:
+- service boundaries
+- communication
+- retries
+- circuit breakers
+- Saga
+- outbox
+- Kafka
+- eventual consistency
+- idempotency.</p>
+<h2 id="system-design">System Design</h2>
+<p>Prepare 15–20 designs.</p>
+<h2 id="ai">AI</h2>
+<p>Prepare:
+- LLM
+- embeddings
+- RAG
+- vector DB
+- tool calling
+- agents
+- Spring AI
+- MCP
+- evaluation
+- AI security
+- AI cost.</p>
+<hr />
+<h1 id="45-product-engineering-concepts">45. Product Engineering Concepts</h1>
+<p>Study beyond framework knowledge.</p>
+<h2 id="product-thinking">Product thinking</h2>
+<ul>
+<li>requirements</li>
+<li>customer problems</li>
+<li>user stories</li>
+<li>acceptance criteria</li>
+<li>product metrics</li>
+<li>feature flags</li>
+<li>experimentation</li>
+<li>backward compatibility</li>
+<li>API versioning</li>
+<li>migration strategies.</li>
+</ul>
+<h2 id="saas-architecture">SaaS architecture</h2>
+<ul>
+<li>multi-tenancy</li>
+<li>tenant isolation</li>
+<li>subscription</li>
+<li>usage metering</li>
+<li>quotas</li>
+<li>billing</li>
+<li>RBAC</li>
+<li>audit</li>
+<li>configuration.</li>
+</ul>
+<h2 id="production-engineering">Production engineering</h2>
+<ul>
+<li>monitoring</li>
+<li>alerts</li>
+<li>incidents</li>
+<li>RCA</li>
+<li>postmortems</li>
+<li>SLOs</li>
+<li>deployment strategies</li>
+<li>rollback</li>
+<li>feature flags.</li>
+</ul>
+<hr />
+<h1 id="46-6d-domain-knowledge-to-preserve">46. 6D Domain Knowledge to Preserve</h1>
+<p>Do not throw away telecom expertise.</p>
+<p>Study:</p>
+<h3 id="telecom-bss">Telecom BSS</h3>
+<ul>
+<li>CRM</li>
+<li>product catalog</li>
+<li>customer management</li>
+<li>order management</li>
+<li>billing</li>
+<li>charging</li>
+<li>invoicing</li>
+<li>payments</li>
+<li>collections</li>
+<li>customer lifecycle.</li>
+</ul>
+<h3 id="oss">OSS</h3>
+<ul>
+<li>provisioning</li>
+<li>network inventory</li>
+<li>service assurance</li>
+<li>fault management</li>
+<li>configuration.</li>
+</ul>
+<h3 id="telecom-concepts">Telecom concepts</h3>
+<ul>
+<li>subscriber</li>
+<li>SIM</li>
+<li>plan</li>
+<li>tariff</li>
+<li>usage</li>
+<li>charging</li>
+<li>prepaid</li>
+<li>postpaid</li>
+<li>rating</li>
+<li>mediation</li>
+<li>roaming</li>
+<li>provisioning.</li>
+</ul>
+<h3 id="industry-apis-standards">Industry APIs / standards</h3>
+<p>Understand the purpose of:
+- TM Forum
+- Open APIs
+- telecom digital architecture
+- product/order/customer APIs.</p>
+<hr />
+<h1 id="47-competitive-positioning">47. Competitive Positioning</h1>
+<p>Build a comparison matrix:</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Current 6D Profile</th>
+<th>Target Product Profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td>Strong</td>
+<td>Expert</td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td>Strong</td>
+<td>Expert</td>
+</tr>
+<tr>
+<td>Microservices</td>
+<td>Strong</td>
+<td>Expert</td>
+</tr>
+<tr>
+<td>React</td>
+<td>Intermediate</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>Strong</td>
+<td>Advanced</td>
+</tr>
+<tr>
+<td>Camunda</td>
+<td>Strong</td>
+<td>Specialized advantage</td>
+</tr>
+<tr>
+<td>Batch</td>
+<td>Strong</td>
+<td>Advanced</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>Needs strengthening</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>Needs strengthening</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>Cloud</td>
+<td>Needs strengthening</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>Kubernetes</td>
+<td>Basic/intermediate</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>System Design</td>
+<td>Needs strengthening</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>Basic/AI-assisted</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>RAG</td>
+<td>New</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>Spring AI</td>
+<td>New</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>New</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>New</td>
+<td>Working knowledge</td>
+</tr>
+<tr>
+<td>AI Evaluation</td>
+<td>New</td>
+<td>Working knowledge</td>
+</tr>
+<tr>
+<td>AI Security</td>
+<td>New</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>Product thinking</td>
+<td>Existing</td>
+<td>Strong</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="48-priority-matrix">48. Priority Matrix</h1>
+<h2 id="must-learn">Must learn</h2>
+<ol>
+<li>Advanced Java</li>
+<li>Spring Boot internals</li>
+<li>Microservices</li>
+<li>Kafka</li>
+<li>System Design</li>
+<li>SQL/database design</li>
+<li>Redis</li>
+<li>AWS</li>
+<li>Docker</li>
+<li>Kubernetes</li>
+<li>Security</li>
+<li>RAG</li>
+<li>Spring AI</li>
+<li>LLM APIs</li>
+<li>Tool calling</li>
+<li>AI agents</li>
+</ol>
+<h2 id="learn-next">Learn next</h2>
+<ol start="17">
+<li>MCP</li>
+<li>AI evaluation</li>
+<li>AI observability</li>
+<li>AI security</li>
+<li>PostgreSQL + pgvector</li>
+<li>OpenTelemetry</li>
+<li>Multi-tenant SaaS</li>
+<li>Event-driven architecture</li>
+<li>Outbox/Saga/CQRS.</li>
+</ol>
+<h2 id="lower-priority-initially">Lower priority initially</h2>
+<ul>
+<li>PyTorch</li>
+<li>TensorFlow</li>
+<li>advanced deep learning</li>
+<li>CUDA</li>
+<li>model training</li>
+<li>advanced ML mathematics</li>
+<li>research-level transformer implementation.</li>
+</ul>
+<hr />
+<h1 id="49-suggested-learning-order">49. Suggested Learning Order</h1>
+<h2 id="phase-1-backend-mastery">Phase 1 — Backend Mastery</h2>
+<p>Java → Spring → JPA → SQL → REST → Security</p>
+<h2 id="phase-2-distributed-systems">Phase 2 — Distributed Systems</h2>
+<p>Microservices → Kafka → Redis → transactions → eventual consistency → resilience</p>
+<h2 id="phase-3-production">Phase 3 — Production</h2>
+<p>Docker → Kubernetes → AWS → observability → CI/CD → security</p>
+<h2 id="phase-4-system-design">Phase 4 — System Design</h2>
+<p>Start designing real systems.</p>
+<h2 id="phase-5-ai-fundamentals">Phase 5 — AI Fundamentals</h2>
+<p>LLM → embeddings → vector search → RAG</p>
+<h2 id="phase-6-java-ai">Phase 6 — Java AI</h2>
+<p>Spring AI → LangChain4j → tool calling</p>
+<h2 id="phase-7-agents">Phase 7 — Agents</h2>
+<p>Agents → workflow integration → human-in-loop → MCP</p>
+<h2 id="phase-8-ai-production">Phase 8 — AI Production</h2>
+<p>Evaluation → security → observability → cost → reliability</p>
+<h2 id="phase-9-product-portfolio">Phase 9 — Product Portfolio</h2>
+<p>Build 3–5 production-style projects.</p>
+<h2 id="phase-10-job-search">Phase 10 — Job Search</h2>
+<p>Apply specifically to product companies.</p>
+<hr />
+<h1 id="50-company-research-output-required-from-codex">50. Company Research Output Required from Codex</h1>
+<p>For each target company, create:</p>
+<pre><code class="language-text">Company:
+Category:
+Product:
+Business model:
+Product vs services classification:
+Telecom/BSS relevance:
+India locations:
+Hyderabad:
+Bengaluru:
+Typical Java roles:
+Typical experience:
+Core technologies:
+Cloud:
+Kafka:
+Kubernetes:
+AI/GenAI:
+Salary information:
+Interview pattern:
+Current hiring:
+Fit score / 10:
+Current skill gaps:
+Recommended preparation:
+Priority:
+</code></pre>
+<hr />
+<h1 id="51-skill-research-output-required-from-codex">51. Skill Research Output Required from Codex</h1>
+<p>For every technology/topic, create notes containing:</p>
+<ol>
+<li>Definition</li>
+<li>Why it exists</li>
+<li>Problem it solves</li>
+<li>Internal working</li>
+<li>Architecture</li>
+<li>Important components</li>
+<li>Example</li>
+<li>Java/Spring example</li>
+<li>Production use case</li>
+<li>Common mistakes</li>
+<li>Performance considerations</li>
+<li>Security considerations</li>
+<li>Interview questions</li>
+<li>Deep interview questions</li>
+<li>Comparison with alternatives</li>
+<li>When NOT to use it</li>
+<li>Hands-on exercise</li>
+<li>Project application</li>
+<li>Senior-level interview answer</li>
+<li>Real-world troubleshooting scenarios.</li>
+</ol>
+<hr />
+<h1 id="52-ai-notes-output-required-from-codex">52. AI Notes Output Required from Codex</h1>
+<p>For each AI topic:</p>
+<pre><code class="language-text">Concept
+↓
+Why it exists
+↓
+How it works
+↓
+Architecture
+↓
+Example
+↓
+Java implementation
+↓
+Spring AI implementation
+↓
+Production architecture
+↓
+Security
+↓
+Evaluation
+↓
+Cost
+↓
+Failure modes
+↓
+Interview questions
+↓
+Hands-on project
+</code></pre>
+<p>Topics:</p>
+<ul>
+<li>LLM</li>
+<li>tokens</li>
+<li>transformer</li>
+<li>embeddings</li>
+<li>vector DB</li>
+<li>RAG</li>
+<li>advanced RAG</li>
+<li>reranking</li>
+<li>structured output</li>
+<li>function calling</li>
+<li>tool calling</li>
+<li>agents</li>
+<li>agent memory</li>
+<li>MCP</li>
+<li>AI workflow</li>
+<li>AI evaluation</li>
+<li>AI observability</li>
+<li>AI security</li>
+<li>AI guardrails</li>
+<li>AI cost optimization.</li>
+</ul>
+<hr />
+<h1 id="53-rules-for-the-codex-research">53. Rules for the Codex Research</h1>
+<ol>
+<li>Use official documentation whenever possible.</li>
+<li>For current company information, verify with current web sources.</li>
+<li>Do not rely on old salary or job information without clearly labeling it.</li>
+<li>Distinguish product companies from service/consulting companies.</li>
+<li>Do not invent technologies used by a company.</li>
+<li>Clearly label assumptions.</li>
+<li>Prefer current 2026 information for company/job-market research.</li>
+<li>For frameworks, prefer official documentation.</li>
+<li>Explain concepts deeply enough for a 5+ year engineer.</li>
+<li>Include diagrams using Mermaid where useful.</li>
+<li>Use Java examples for backend/AI topics where possible.</li>
+<li>Don't replace Java with Python unnecessarily.</li>
+<li>Connect every new technology to real product engineering.</li>
+<li>Explain trade-offs.</li>
+<li>Include interview questions after every major topic.</li>
+<li>Include senior-level "why" questions, not just definitions.</li>
+<li>Include production failure scenarios.</li>
+<li>Include practical exercises.</li>
+<li>Track progress using checkboxes.</li>
+<li>Keep the roadmap focused on product engineering.</li>
+</ol>
+<hr />
+<h1 id="54-final-career-target">54. Final Career Target</h1>
+<p>The end-state profile should be:</p>
+<blockquote>
+<p><strong>Senior Product Software Engineer / AI-enabled Backend Engineer</strong></p>
+</blockquote>
+<p>with:</p>
+<pre><code class="language-text">Java 17/21
+Spring Boot
+Microservices
+Kafka
+Redis
+PostgreSQL
+React
+AWS
+Docker
+Kubernetes
+System Design
+Distributed Systems
+Security
+Observability
+Spring AI
+LLMs
+RAG
+Vector Search
+Tool Calling
+AI Agents
+MCP
+AI Evaluation
+AI Security
+Multi-tenant SaaS
+Telecom/BSS domain
+</code></pre>
+<p>The strongest differentiation is:</p>
+<pre><code class="language-text">5+ years enterprise product engineering
+            +
+Telecom/BSS domain
+            +
+Java/Spring microservices
+            +
+Distributed systems
+            +
+Cloud
+            +
+AI application engineering
+            +
+Workflow automation
+</code></pre>
+<p>This is the profile to build toward rather than becoming a generic "Java + AI" candidate.</p>
+  </main>
+</div>
+
+</body>
+</html>
