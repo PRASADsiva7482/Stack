@@ -95,8 +95,25 @@ for ch in chapters:
             h_id = re.sub(r'[^a-zA-Z0-9_\-]+', '-', h_clean.lower()).strip('-')
             subheadings.append({"level": 3, "title": h_clean, "id": h_id})
 
+    # Pre-process links: Convert relative markdown links ([file.md](file.md)) to hash links (#chap-slug)
+    def rewrite_md_links(match):
+        link_text = match.group(1)
+        href = match.group(2)
+        if href.endswith('.md') or '.md#' in href:
+            parts = href.split('#')
+            f_name_only = parts[0].split('/')[-1]
+            hash_part = f"#{parts[1]}" if len(parts) > 1 else ""
+            target = next((c for c in chapters if c["filename"].lower() == f_name_only.lower()), None)
+            if target:
+                return f"[{link_text}](#{target['id']}{hash_part})"
+            else:
+                return f"[{link_text}](Interview_Notes/{f_name_only}{hash_part})"
+        return match.group(0)
+
+    preprocessed_md = re.sub(r'\[(.*?)\]\((.*?)\)', rewrite_md_links, raw_md)
+
     # Render HTML
-    html_content = md_parser.reset().convert(raw_md)
+    html_content = md_parser.reset().convert(preprocessed_md)
     
     # Inject IDs into h2 and h3
     def inject_id(match):
@@ -1006,11 +1023,15 @@ html_template = f"""<!DOCTYPE html>
         </div>
         <h1 class="article-title" id="chapterTitle">Title</h1>
         <div class="article-source">
-          <span>Source File:</span>
-          <a id="metaSourceLink" href="#" target="_blank" class="source-link-btn" title="Click to view and open the raw Markdown file">
+          <span>Source:</span>
+          <code id="metaSource">Interview_Notes/01_Core_Java_Advanced.md</code>
+          <a id="metaGhLink" href="#" target="_blank" class="source-link-btn" title="View formatted Markdown on GitHub">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            <span>GitHub .md ↗</span>
+          </a>
+          <a id="metaSourceLink" href="#" target="_blank" class="source-link-btn" title="View raw static Markdown file">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            <span id="metaSource">Interview_Notes/01_Core_Java_Advanced.md</span>
-            <span class="source-badge">View .md ↗</span>
+            <span>Raw File ↗</span>
           </a>
         </div>
       </header>
@@ -1069,9 +1090,12 @@ function renderChapter(index) {{
   document.getElementById('metaReadTime').textContent = ch.readTime;
   document.getElementById('chapterTitle').textContent = ch.title;
   
-  const sourcePath = (ch.num === "00" && ch.filename.includes("Roadmap")) ? ch.filename : 'Interview_Notes/' + ch.filename;
+  const isRoadmap = (ch.num === "00" && ch.filename.includes("Roadmap"));
+  const sourcePath = isRoadmap ? ch.filename : 'Interview_Notes/' + ch.filename;
   document.getElementById('metaSource').textContent = sourcePath;
   document.getElementById('metaSourceLink').href = sourcePath;
+  document.getElementById('metaGhLink').href = 'https://github.com/PRASADsiva7482/Stack/blob/main/' + sourcePath;
+
 
   // Render Body
   const bodyEl = document.getElementById('articleBody');
