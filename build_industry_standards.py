@@ -564,10 +564,63 @@ html_template = f"""<!DOCTYPE html>
   }}
 
   .article-source {{
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 12px;
     color: var(--text-muted);
-    font-family: var(--font-mono);
+    margin-top: 6px;
   }}
+
+  .source-link-btn {{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 3px 10px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }}
+  .source-link-btn:hover {{
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    color: var(--accent-text);
+  }}
+
+  .source-badge {{
+    font-size: 10px;
+    background: var(--accent);
+    color: #ffffff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }}
+
+  .doc-link-tag {{
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 7px;
+    background: var(--accent-subtle);
+    color: var(--accent-text) !important;
+    border-radius: 4px;
+    text-decoration: none !important;
+    border: 1px solid rgba(2, 132, 199, 0.25);
+    font-weight: 500;
+    transition: all 0.12s ease;
+  }}
+  .doc-link-tag:hover {{
+    background: var(--accent);
+    color: #ffffff !important;
+    border-color: var(--accent);
+  }}
+
 
   /* Article Body Typography (GitBook / Stripe style) */
   .article-body {{
@@ -953,7 +1006,12 @@ html_template = f"""<!DOCTYPE html>
         </div>
         <h1 class="article-title" id="chapterTitle">Title</h1>
         <div class="article-source">
-          Source: <span id="metaSource">Interview_Notes/01_Core_Java_Advanced.md</span>
+          <span>Source File:</span>
+          <a id="metaSourceLink" href="#" target="_blank" class="source-link-btn" title="Click to view and open the raw Markdown file">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span id="metaSource">Interview_Notes/01_Core_Java_Advanced.md</span>
+            <span class="source-badge">View .md ↗</span>
+          </a>
         </div>
       </header>
 
@@ -1010,11 +1068,48 @@ function renderChapter(index) {{
   document.getElementById('metaCategory').textContent = ch.category;
   document.getElementById('metaReadTime').textContent = ch.readTime;
   document.getElementById('chapterTitle').textContent = ch.title;
-  document.getElementById('metaSource').textContent = 'Interview_Notes/' + ch.filename;
+  
+  const sourcePath = (ch.num === "00" && ch.filename.includes("Roadmap")) ? ch.filename : 'Interview_Notes/' + ch.filename;
+  document.getElementById('metaSource').textContent = sourcePath;
+  document.getElementById('metaSourceLink').href = sourcePath;
 
   // Render Body
   const bodyEl = document.getElementById('articleBody');
   bodyEl.innerHTML = ch.html;
+
+  // Make all links pointing to .md files fully clickable and interactive!
+  bodyEl.querySelectorAll('a').forEach(a => {{
+    const href = a.getAttribute('href');
+    if (!href) return;
+
+    if (href.endsWith('.md') || href.includes('.md#')) {{
+      const [cleanHref, hash] = href.split('#');
+      const parts = cleanHref.split('/');
+      const targetFilename = parts[parts.length - 1];
+
+      const targetIdx = CHAPTERS.findIndex(c => c.filename.toLowerCase() === targetFilename.toLowerCase());
+      if (targetIdx !== -1) {{
+        a.classList.add('doc-link-tag');
+        a.setAttribute('title', 'Click to view Chapter ' + CHAPTERS[targetIdx].num + ' (' + CHAPTERS[targetIdx].title + ')');
+        a.addEventListener('click', (e) => {{
+          e.preventDefault();
+          renderChapter(targetIdx);
+          if (hash) {{
+            setTimeout(() => {{
+              const targetHeading = document.getElementById(hash);
+              if (targetHeading) targetHeading.scrollIntoView({{ behavior: 'smooth' }});
+            }}, 80);
+          }}
+        }});
+      }} else {{
+        if (!href.startsWith('Interview_Notes/') && !href.startsWith('http')) {{
+          a.setAttribute('href', 'Interview_Notes/' + href);
+        }}
+        a.setAttribute('target', '_blank');
+      }}
+    }}
+  }});
+
 
   // Wrap tables for responsive scrolling
   bodyEl.querySelectorAll('table').forEach(tbl => {{
